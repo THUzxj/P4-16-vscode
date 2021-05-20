@@ -1,0 +1,25 @@
+{
+    "name": "p4-16-vscode",
+    "displayName": "p4-16-vscode",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.56.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "p4",
+            "aliases": ["P4", "p4"],
+            "extensions": [".p4"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "p4",
+            "scopeName": "source.p4",
+            "path": "./syntaxes/p4.tmLanguage.json"
+        }]
+    }
+}
