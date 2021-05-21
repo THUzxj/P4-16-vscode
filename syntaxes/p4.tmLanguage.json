@@ -1,20 +1,94 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "P4",
+	"fileTypes": [
+		"p4",
+		"P4"
+	],
 	"patterns": [
 		{
 			"include": "#keywords"
 		},
 		{
 			"include": "#strings"
+		},
+		{
+			"include": "#entities"
+		},
+		{
+			"include": "#constants"
 		}
 	],
 	"repository": {
 		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.p4",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
+			"patterns": [
+				{
+					"name": "keyword.control.p4",
+					"match": "\\b(if|else)\\b"
+				},
+				{
+					"name": "storage.type.element.p4",
+					"match": "\\b(parser|control|package|table|extern)\\b"
+				},
+				{
+					"name": "storage.type.direction.p4",
+					"match": "\\b(in|out|inout)\\b"
+				},
+				{
+					"name": "storage.type.derived_type.p4",
+					"match": "\\b(enum|header|struct|header_union|tuple)\\b"
+				},
+				{
+					"name": "storage.type.base_type.p4",
+					"match": "\\b(bool|error|bit|int|string|varbit|match_kind)\\b"
+				},
+				{
+					"name": "storage.type.typedef.p4",
+					"match": "\\b(typedef|type|const)\\b"
+				},
+				{
+					"name": "entity.name.function.match_kind.p4",
+					"match": "\\b(exact|ternary|lpm)\\b"
+				},
+				{
+					"name": "storage.type.control.p4",
+					"match": "\\b(key|actions|default_action|size|max_size)\\b"
+				},
+				{
+					"name": "storage.type.action_statements.p4",
+					"match": "\\b(return|exit|switch)\\b"
+				},
+				{
+					"name": "storage.type.control.apply.p4",
+					"match": "\\b(apply)\\b"
+				},
+				{
+					"name": "storage.type.parser.p4",
+					"match": "\\b(state|default|transition|select|verify)\\b"
+				},
+				{
+					"captures": {
+						"1": {"name": "keyword.control.import.p4"},
+						"2": {"name": "string.quoted.other.p4"}
+					},
+					"match": "^[^\\S\\r\\n]*(\\#[^\\S\\r\\n]*include)[^\\S\\r\\n]+(<.*>)[^\\S\\r\\n]*$"
+				},
+				{
+					"captures": {
+						"1": {"name": "keyword.control.define.p4"},
+						"2": {"name": "entity.name.function.preprocessor.p4"}
+					},
+					"match": "^[^\\S\\r\\n]*(\\#[^\\S\\r\\n]*define)[^\\S\\r\\n]+(\\w*)"
+				},
+				{
+					"name": "keyword.control.import.p4",
+					"match": "^[^\\S\\r\\n]*\\#[^\\S\\r\\n]*(?:include|else|endif|ifdef|ifndef|elif|undef|if)"
+				},
+				{
+					"name": "entity.name.function.annotation.p4",
+					"match": "(@\\w+)\\b"
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.p4",
@@ -24,6 +98,32 @@
 				{
 					"name": "constant.character.escape.p4",
 					"match": "\\\\."
+				}
+			]
+		},
+		"entities": {
+			"patterns": [
+				{
+					"captures": {
+						"1": {"name": "entity.name.type.p4"},
+						"2": {"name": "entity.name.function.p4"}
+					},
+					"match": "\\b(action)\\s+(\\w+)\\s*(?:\\()"
+				}
+			]
+		},
+		"constants": {
+			"patterns": [
+				{
+					"captures": {
+						"1": {"name": "keyword.control.bitlength.p4"},
+						"2": {"name": "constant.numeric.p4"}
+					},
+					"match": "\\b((?:\\d+[sw])?)((?:(?:0[dD])?\\d+)|(?:0[xX][0-9a-fA-F]+)|(?:0[bB][01]+)|(?:0[oO][0-7]+))\\W"
+				},
+				{
+					"name": "keyword.other.p4",
+					"match": "\\b(true|false)\\b"
 				}
 			]
 		}
